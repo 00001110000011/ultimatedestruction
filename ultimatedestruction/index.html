@@ -61,14 +61,20 @@
                     </div>
                     <div id="status" class="game-status">Press SPACE to start</div>
                     <div class="score">
-                        <span>Player 2</span>
+                        <span id="player2Label">Player 2</span>
                         <span id="score2" class="score-value">0</span>
                     </div>
                 </div>
                 <canvas id="gameCanvas" width="800" height="400"></canvas>
+                <div class="game-mode-toggle">
+                    <label for="modeToggle">
+                        <input type="checkbox" id="modeToggle">
+                        <span id="modeLabel">AI Mode: OFF</span>
+                    </label>
+                </div>
                 <div class="game-controls">
                     <p><strong>Player 1:</strong> W (up) / S (down)</p>
-                    <p><strong>Player 2:</strong> ↑ (up) / ↓ (down)</p>
+                    <p id="player2Controls"><strong>Player 2:</strong> ↑ (up) / ↓ (down)</p>
                     <p><strong>SPACE:</strong> Start/Pause | <strong>R:</strong> Reset</p>
                 </div>
             </div>
