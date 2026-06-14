@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Destruction</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ping Pong Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Ultimate Destruction</h1>
-        <p>Welcome to the Ultimate Destruction application.</p>
-        <div id="app"></div>
+        <h1>Ping Pong Game</h1>
+        <div class="game-info">
+            <div class="score-container">
+                <span>Player 1: <span id="score1">0</span></span>
+                <span id="status">Press SPACE to start</span>
+                <span>Player 2: <span id="score2">0</span></span>
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div class="controls">
+            <p><strong>Controls:</strong></p>
+            <p>Player 1: W (up) / S (down)</p>
+            <p>Player 2: ↑ (up) / ↓ (down)</p>
+            <p>SPACE: Start/Pause | R: Reset</p>
+        </div>
     </div>
-    <script src="utils.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
