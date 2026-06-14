@@ -7,11 +7,60 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Ultimate Destruction</h1>
-        <p>Welcome to the Ultimate Destruction application.</p>
-        <div id="app"></div>
-    </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">⚡ Ultimate Destruction</div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#app" class="nav-link">Launch</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Ultimate Destruction</h1>
+            <p class="hero-subtitle">Experience the power of dynamic interaction and explosive performance</p>
+            <button class="cta-button" onclick="document.getElementById('app').scrollIntoView({behavior: 'smooth'})">
+                Get Started
+            </button>
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Lightning Fast</h3>
+                <p>Optimized performance for smooth interactions</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Precision Control</h3>
+                <p>Fine-tuned mechanics for perfect execution</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>Modern Design</h3>
+                <p>Beautiful and intuitive user interface</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="app" class="app-section">
+        <div class="container">
+            <h2>Launch Application</h2>
+            <div id="app" class="app-container"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Ultimate Destruction. All rights reserved.</p>
+    </footer>
+
     <script src="utils.js"></script>
     <script src="script.js"></script>
 </body>
