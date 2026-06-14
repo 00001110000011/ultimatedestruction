@@ -3,15 +3,19 @@ const ctx = canvas.getContext('2d');
 const status = document.getElementById('status');
 const score1El = document.getElementById('score1');
 const score2El = document.getElementById('score2');
+const modeToggle = document.getElementById('modeToggle');
+const modeLabel = document.getElementById('modeLabel');
 
 // Game variables
 const paddleWidth = 10;
 const paddleHeight = 80;
 const ballSize = 8;
 const paddleSpeed = 6;
+const aiSpeed = 5;
 
 let gameRunning = false;
 let gamePaused = false;
+let aiMode = false;
 
 // Paddles
 const paddle1 = {
@@ -45,6 +49,11 @@ let ball = {
 const keys = {};
 
 window.addEventListener('keydown', (e) => {
+    // Prevent arrow keys from scrolling
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+    }
+
     keys[e.key.toUpperCase()] = true;
 
     if (e.key === ' ') {
@@ -65,16 +74,27 @@ window.addEventListener('keyup', (e) => {
     keys[e.key.toUpperCase()] = false;
 });
 
+// Mode toggle
+if (modeToggle) {
+    modeToggle.addEventListener('change', (e) => {
+        aiMode = e.target.checked;
+        if (modeLabel) {
+            modeLabel.textContent = aiMode ? 'AI Mode: ON' : 'AI Mode: OFF';
+        }
+        resetGame();
+    });
+}
+
 function startGame() {
     gameRunning = true;
     gamePaused = false;
-    status.textContent = 'Game Running';
+    status.textContent = aiMode ? 'Game Running (vs AI)' : 'Game Running';
     gameLoop();
 }
 
 function togglePause() {
     gamePaused = !gamePaused;
-    status.textContent = gamePaused ? 'Paused' : 'Game Running';
+    status.textContent = gamePaused ? 'Paused' : (aiMode ? 'Game Running (vs AI)' : 'Game Running');
 }
 
 function resetGame() {
@@ -91,8 +111,29 @@ function resetGame() {
         dx: 5,
         dy: 5
     };
+    paddle1.y = canvas.height / 2 - paddleHeight / 2;
+    paddle2.y = canvas.height / 2 - paddleHeight / 2;
     status.textContent = 'Press SPACE to start';
     draw();
+}
+
+function updateAI() {
+    // Simple AI: move paddle towards the ball
+    const paddle2Center = paddle2.y + paddle2.height / 2;
+    
+    // Add some difficulty variation - AI isn't perfect
+    const difficulty = 0.85; // 85% accuracy
+    const targetY = ball.y * difficulty + paddle2Center * (1 - difficulty);
+    
+    if (paddle2Center < targetY - 10) {
+        if (paddle2.y < canvas.height - paddle2.height) {
+            paddle2.y += aiSpeed;
+        }
+    } else if (paddle2Center > targetY + 10) {
+        if (paddle2.y > 0) {
+            paddle2.y -= aiSpeed;
+        }
+    }
 }
 
 function updatePaddles() {
@@ -104,12 +145,17 @@ function updatePaddles() {
         paddle1.y += paddleSpeed;
     }
 
-    // Player 2 controls (Arrow Keys)
-    if (keys['ARROWUP'] && paddle2.y > 0) {
-        paddle2.y -= paddleSpeed;
-    }
-    if (keys['ARROWDOWN'] && paddle2.y < canvas.height - paddle2.height) {
-        paddle2.y += paddleSpeed;
+    if (aiMode) {
+        // AI controls paddle 2
+        updateAI();
+    } else {
+        // Player 2 controls (Arrow Keys)
+        if (keys['ARROWUP'] && paddle2.y > 0) {
+            paddle2.y -= paddleSpeed;
+        }
+        if (keys['ARROWDOWN'] && paddle2.y < canvas.height - paddle2.height) {
+            paddle2.y += paddleSpeed;
+        }
     }
 }
 
